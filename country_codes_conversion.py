@@ -1,5 +1,3 @@
-
-
 #LIst taken from https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 #concatenated in Excel
 COUNTRY_CODES_2 = [
@@ -259,9 +257,5 @@ COUNTRY_CODES_2 = [
 def get2ISOcodeFromCountryName(fullCountryName):
     for countryTuple in COUNTRY_CODES_2:
         if fullCountryName.lower() in countryTuple[1].lower():
-            # print ("Found a country code:"+countryTuple[0])
             return countryTuple[0].lower()
     return ("NO_CODE_"+fullCountryName).lower()
-
-
-# get2ISOcodeFromCountryName("Germany")
