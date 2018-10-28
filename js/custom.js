@@ -49,14 +49,20 @@ require(["d3", "populate_map"], function(d3, populate_map) {
       )
       .transition().duration(1000)
       .style("transform", "scale(1, 1)");
+    
 
-  // import * as populateMap from populate_map;
-  d3.csv("../csv/countries_trials_28Oct.csv").then(
-      function(data) {
-        console.log(data);
-        populate_map.populateMap("svg2985", data);
-      });//d3.csv("../csv/countries_trials_28Oct.csv").then (
+  // d3.csv("../csv/countries_trials_28Oct.csv").then(
+  //     function(data) {
+  //       console.log(data);
+  //       populate_map.populateMap("svg2985", data);
+  //     });//d3.csv("../csv/countries_trials_28Oct.csv").then (
+  // 
+
+  d3.json("../csv/countries_trials_28Oct.json").then(
+    function(data) {
+      console.log(data);
+      populate_map.populateMap("svg2985", data);
+    });//d3.csv("../csv/countries_trials_28Oct.csv").then ()
+        // function(error, xml) {
   });//d3.svg("../svg/world-map_for_dashboard.svg",
-      // function(error, xml) {
-
 });//require(["d3"], function(d3) {

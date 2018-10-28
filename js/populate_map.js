@@ -18,7 +18,20 @@ define(["d3"], function(d3){
         svg_elem.selectAll("g").each(
             function(d) {
                 // console.log("this:"+this);
+                this_tag_id = d3.select(this).attr("id") 
                 console.log(d3.select(this).attr("id"))
+                // console.log(data[this_tag_id])
+                if(typeof data[this_tag_id] === 'undefined') {
+                    console.log("No data");
+                    
+                }
+                else {
+                    console.log("   Data:")
+                    console.log(data[this_tag_id].nct_id_count)
+                    console.log(data[this_tag_id].full_country_name)
+
+                }
+                
             }
         );
         console.log(data)
