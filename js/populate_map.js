@@ -1,34 +1,62 @@
 
 require.config({
     paths: {
-      d3: "../js/d3/d3.min",
-    //   populate_map: "../js/populate_map"
+        d3: "../js/d3/d3.min",
+    //   plotly : "https://cdn.plot.ly/plotly-latest.min"
+        plotly : "../js/plotly/plotly-latest.min"
     }
   });
 
 
-define(["d3"], function(d3){
-    return {
-    //   name: 'David',
-      populateMap: function(svg_map_elem_id, data, quantile_scale) {
-        // console.log("Hello"+svg_map_elem_id);
-        svg_elem = d3.select("#countries_map");
-        // console.log(svg_elem);
-        svg_elem.selectAll("g").each(
-            function(d) {
+function mapClicked(d3Obj, plotlyObj, elementClicked) {
+    console.log("mouse click:"+d3Obj.select(elementClicked).attr("id"))
+
+    var data = [{
+        x: ['giraffes', 'orangutans', 'monkeys'],
+        y: [20, 14, 23],
+        type: 'bar'
+    }];
+
+    var layout = {
+        title: 'Hide the Modebar',
+        showlegend: true,
+        autosize: false,
+        width: 340,
+        height: 220,
+        margin: {
+            l: 30,
+            r: 30,
+            b: 30,
+            t: 30,
+            pad: 4
+        },
+        // paper_bgcolor: '#7f7f7f',
+        // plot_bgcolor: '#c7c7c7'
+    };
+      
+    plotlyObj.newPlot('country_graph', data,  layout, {displayModeBar: false});
+}
+
+
+define(["d3", "plotly"], function(d3, Plotly){ return {
+        populateMap: function(svg_map_elem_id, data, quantile_scale) {
+            // console.log("Hello"+svg_map_elem_id);
+            svg_elem = d3.select("#countries_map");
+            // console.log(svg_elem);
+            svg_elem.selectAll("g").each(function(d) {
                 this_tag_id = d3.select(this).attr("id") 
                 // console.log(d3.select(this).attr("id"))
                 // console.log(data[this_tag_id])
                 if(typeof data[this_tag_id] === 'undefined') {
                     // console.log("No data");
-                }
-                else {
-                    console.log("   Data:")
-                    console.log(data[this_tag_id].nct_id_count)
-                    console.log(data[this_tag_id].full_country_name)
-                    console.log(quantile_scale(
-                        data[this_tag_id].nct_id_count
-                    ));
+                }//END  if(typeof data[this_tag_id] === 'undefined') {
+                else {// if(typeof data[this_tag_id] === 'undefined') {
+                    // console.log("   Data:")
+                    // console.log(data[this_tag_id].nct_id_count)
+                    // console.log(data[this_tag_id].full_country_name)
+                    // console.log(quantile_scale(
+                    //     data[this_tag_id].nct_id_count
+                    // ));
                     d3.select(this).selectAll("path, circle").each(
                         function() {
                             d3.select(this).attr(
@@ -45,14 +73,18 @@ define(["d3"], function(d3){
                         data[this_tag_id].full_country_name+":  "+
                         data[this_tag_id].nct_id_count
                     )
-                }//else {
-            }//svg_elem.selectAll("g").each(
+                }//END else {// if(typeof data[this_tag_id] === 'undefined') {
+            });//END svg_elem.selectAll("g").each(function(d) {
+            
+            //Removing extra circles, which do not have data available for them on the map
+            svg_elem.selectAll(".circlexx").remove();
 
-        
-                // function(d) {    
-        );//svg_elem.selectAll("g").each(
-        svg_elem.selectAll(".circlexx").remove();
-        // console.log(data)
-      }//populateMap: function(svg_map_elem_id, data, quantile_scale) {
-    }//return {
-  });//define(["d3"], function(d3){
+            svg_elem.selectAll("g").each(
+                function() {
+                    d3.select(this).on("click", function() {
+                            mapClicked(d3, Plotly, this)
+                        }
+                    );
+            })//END svg_elem.selectAll("g").each(
+        }//populateMap: function(svg_map_elem_id, data, quantile_scale) {
+} });//END define(["d3"], function(d3){ return {

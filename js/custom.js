@@ -14,27 +14,19 @@ require.config({
   });
   
 require(["d3", "populate_map"], function(d3, populate_map) {
-  // d3 = require('d3');
-
-  d3.select("body").append("h1").text("Successfully loaded D3 version " + d3.version);
-
   d3.svg("../svg/world-map_for_dashboard.svg",
     function(error, xml) {
-      // alert("h1")
       if (error) throw error;
-      
-      // alert("Hello")
   }).then(function(data) {
-  // document.body.appendChild(data.documentElement);
-  // alert("I am loaded")
-  importedNode = document.importNode(data.documentElement, true);
+    // document.body.appendChild(data.documentElement);
+    // alert("I am loaded")
+    importedNode = document.importNode(data.documentElement, true);
 
-  // Load external SVG: https://bl.ocks.org/mbostock/1014829
-  d3.select("#countries_map").each(
-    function() {
-        this.appendChild(importedNode.cloneNode(true));
-    }
-  );
+    // Load external SVG: https://bl.ocks.org/mbostock/1014829
+    d3.select("#countries_map").each(
+      function() {
+          this.appendChild(importedNode.cloneNode(true));
+    });//
 
   //Transition of the first DIV:
 
