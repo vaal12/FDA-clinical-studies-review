@@ -64,12 +64,14 @@ require(["d3", "populate_map"], function(d3, populate_map) {
 
       //Chromatic scales: https://github.com/d3/d3-scale-chromatic
       var quantile_scale = d3.scaleQuantile()
+      // var quantile_scale = d3.scaleThreshold()
+      // var quantile_scale = d3.scaleQuantize()
           .domain(nct_counts_arr)
           // .range( d3.schemeBlues[9]);
           .range( d3.schemeYlGnBu[9]);
           
-      console.log("Quantiles:")
-      console.log(quantile_scale.quantiles())
+      // console.log("Quantiles:")
+      // console.log(quantile_scale.quantiles())
       populate_map.populateMap("svg2985", data, quantile_scale);
     });//d3.json("../csv/countries_trials_28Oct.json").then(
           // function(data) {
