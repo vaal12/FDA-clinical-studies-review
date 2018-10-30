@@ -29,23 +29,29 @@ function mapClicked(d3Obj, plotlyObj, elementClicked) {
                     [d3.select(elementClicked).attr("id"), 30, 200, 100, 400, 150, 250],
                     ["ticks", '1999', '2000', "2001", "2002", "2003", "2004"],
                 ],
-                axis: {
-                    y: {
-                        show: false
-                    }
-                    // x: {
-                    //     // type: 'timeseries',
-                    //     tick: {
-                    //         // this also works for non timeseries data
-                    //         values: ['1999', '2000', "2001", "2002", "2003", "2004"]
-                    //     }
-                    // }
-                },
+                
                 labels: true,
                 type: 'bar'
             },
             legend: {
+                text:"I am a abar",
                 show: false,
+            },
+            axis: {
+                y: {
+                    show: false
+                },
+                x: {
+                    label : {
+                        text: "year",
+                        position: 'outer-right'
+                    },
+                    // type: 'timeseries',
+                    // tick: {
+                    //     // this also works for non timeseries data
+                    //     values: ['1999bis', '2000', "2001", "2002", "2003", "2004"]
+                    // }
+                }
             },
             tooltip: {
                 grouped: false,
