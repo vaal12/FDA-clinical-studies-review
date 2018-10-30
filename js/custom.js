@@ -12,8 +12,11 @@ require.config({
     //   },
     // }
   });
+
+  var d3 = null;
   
 require(["d3", "populate_map"], function(d3, populate_map) {
+  window.d3 = d3
   d3.svg("../svg/world-map_for_dashboard.svg",
     function(error, xml) {
       if (error) throw error;
