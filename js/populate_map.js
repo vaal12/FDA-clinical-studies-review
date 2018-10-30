@@ -10,37 +10,63 @@ require.config({
 
 
 function mapClicked(d3Obj, plotlyObj, elementClicked) {
-    console.log("mouse click:"+d3Obj.select(elementClicked).attr("id"))
 
-    var data = [{
-        x: ['giraffes', 'orangutans', 'monkeys'],
-        y: [20, 14, 23],
-        type: 'bar'
-    }];
+    d3.select("#left_container").transition().duration(1000)
+      .style("transform", "scale(0.001, 1)")
+      .on("end",
+        function(d) {
+          d3.select("#country_details").text("Hello again");
+          d3.select("#country_graph").text("");
+          var chart = c3.generate({
+            bindto: '#country_graph',
+            size: {
+                height: 140,
+                width: 280
+            },
+            data: {
+                columns: [
+                    [d3.select(elementClicked).attr("id"), 30, 200, 100, 400, 150, 250]
+                ]
+            }
+        });
+        }
+      )
+      .transition().duration(1000)
+      .style("transform", "scale(1, 1)");
 
-    var layout = {
-        title: 'Hide the Modebar',
-        showlegend: true,
-        autosize: false,
-        width: 340,
-        height: 220,
-        margin: {
-            l: 30,
-            r: 30,
-            b: 30,
-            t: 30,
-            pad: 4
-        },
-        // paper_bgcolor: '#7f7f7f',
-        // plot_bgcolor: '#c7c7c7'
-    };
+    
+    // console.log("mouse click:"+d3Obj.select(elementClicked).attr("id"))
+
+    // var data = [{
+    //     x: ['giraffes', 'orangutans', 'monkeys'],
+    //     y: [20, 14, 23],
+    //     type: 'bar'
+    // }];
+
+    // var layout = {
+    //     title: 'Hide the Modebar',
+    //     showlegend: true,
+    //     autosize: false,
+    //     width: 340,
+    //     height: 220,
+    //     margin: {
+    //         l: 30,
+    //         r: 30,
+    //         b: 30,
+    //         t: 30,
+    //         pad: 4
+    //     },
+    //     // paper_bgcolor: '#7f7f7f',
+    //     // plot_bgcolor: '#c7c7c7'
+    // };
       
-    plotlyObj.newPlot('country_graph', data,  layout, {displayModeBar: false});
-}
+    // plotlyObj.newPlot('country_graph', data,  layout, {displayModeBar: false});
+}//END function mapClicked(d3Obj, plotlyObj, elementClicked) {
 
 
 define(["c3", "plotly"], function(c3, Plotly){ return {
         populateMap: function(svg_map_elem_id, data, quantile_scale) {
+            window.c3 = c3;
             // console.log("Hello"+svg_map_elem_id);
             svg_elem = d3.select("#countries_map");
             // console.log(svg_elem);

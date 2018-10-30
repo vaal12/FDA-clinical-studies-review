@@ -34,17 +34,6 @@ require(["d3", "populate_map"], function(d3, populate_map) {
   //Transition of the first DIV:
 
 
-  d3.select("#left_container").transition().duration(1000)
-      .style("transform", "scale(0.01, 1)")
-      .on("end",
-        function(d) {
-          d3.select("#country_details").text("Hello again");
-          d3.select("#country_graph").text("Hello again");
-        }
-      )
-      .transition().duration(1000)
-      .style("transform", "scale(1, 1)");
-
   d3.json("../csv/countries_trials_28Oct.json").then(
     function(data) {
       console.log(data);
