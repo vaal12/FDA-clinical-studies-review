@@ -24,10 +24,48 @@ function mapClicked(d3Obj, plotlyObj, elementClicked) {
                 width: 280
             },
             data: {
+                x: "ticks",
                 columns: [
-                    [d3.select(elementClicked).attr("id"), 30, 200, 100, 400, 150, 250]
-                ]
-            }
+                    [d3.select(elementClicked).attr("id"), 30, 200, 100, 400, 150, 250],
+                    ["ticks", '1999', '2000', "2001", "2002", "2003", "2004"],
+                ],
+                axis: {
+                    y: {
+                        show: false
+                    }
+                    // x: {
+                    //     // type: 'timeseries',
+                    //     tick: {
+                    //         // this also works for non timeseries data
+                    //         values: ['1999', '2000', "2001", "2002", "2003", "2004"]
+                    //     }
+                    // }
+                },
+                labels: true,
+                type: 'bar'
+            },
+            legend: {
+                show: false,
+            },
+            tooltip: {
+                grouped: false,
+                position: function (data, width, height, element) {
+                    // console.log(element)
+                    // console.log(this);
+                    var chartOffsetX = document.querySelector("#country_graph").getBoundingClientRect().left;
+                    var graphOffsetX = document.querySelector("#country_graph g.c3-axis-y").getBoundingClientRect().right;
+                    // var tooltipWidth = document.getElementById('tooltip').parentNode.clientWidth;
+                    var tooltipWidth = 50;
+                    var x = (parseInt(element.getAttribute('cx')) ) + graphOffsetX - chartOffsetX - Math.floor(tooltipWidth/2);
+                    var y = element.getAttribute('cy');
+                    var y = y - height - 14;
+                    return {top: y, left: x}
+                },
+                // contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+                //   d = Math.floor(d[0].value)
+                //   return '<div id="tooltip" class="module-triangle-bottom">' + d + ' wows</div>'
+                // }
+              }
         });
         }
       )
