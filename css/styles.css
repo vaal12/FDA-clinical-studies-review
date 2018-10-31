@@ -2,7 +2,7 @@ div {
     /* border-style: solid;
     border-width: 1px; */
     /* margin: auto; */
-    width: 1250px
+    /*  */
     
 }
 
@@ -10,23 +10,26 @@ div {
     display: flex;
     flex-direction: row;
     margin: auto;
+    width: 1450px
     
 }
 
 #countries_map {
     width: 1000px;
     height: 600px;
-    text-align: center;
+    /* text-align: center; */
 }
 #left_container {
-    width: 300px;
+    width: 400px;
     margin: auto;
+    display: inline-block;
 }
 #country_details {
-    border-style: solid;
-    border-width: 1px;
-    margin-top: 0px;
-    width: 100%;
+    /* border-style: solid;
+    border-width: 1px; */
+    margin: auto;
+    /* margin-top: 0px; */
+    width: 320px;
     height: 200px;
 }
 
@@ -34,15 +37,74 @@ div {
     /* border-style: solid; */
     /* border-width: 1px; */
     margin-top: 20px;
-    width: 100%;
+    width: 400px;
     height: 200px;
+    display: inline-block;
+    margin: 0 auto;
     /* background-color: aqua */
 }
 
 #country_graph {
     border-style: solid;
     border-width: 1px;
-    width: 100%;
+    /* width: 100%; */
+    width: 380px;
     height: 180px;
-    /* background-color: aqua */
+    
+    margin: 0 auto;
+    /* background-color: yellow */
 }
+
+#country_graph_title {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 10px;
+}
+
+#title {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#bottom {
+    font-size: 10px;
+}
+
+div_width {
+    width: 100%;
+}
+
+#country_title {
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center; 
+}
+
+#slot1 {
+    background-color: #f7e2a7;
+}
+
+#legend_table {
+    border-style: solid;
+    border-width: 2px;
+    padding: 10px;
+    text-align: center;
+}
+
+.legend_slots {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-right: 5px;
+    padding: 5px; 
+    mix-blend-mode: difference;
+    /* color:white; */
+    /* width: 50px;
+    height: 25px; */
+}
+
+
+

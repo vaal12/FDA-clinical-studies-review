@@ -16,15 +16,49 @@
     <!-- CREATE SYMBOLIC LINKS FOR HTDOCS FOLDER:
                     create symbolic link in Far (Alt+F6)? -->
     <!-- Flexbox: https://www.w3schools.com/css/css3_flexbox.asp -->
+    <div id="title">
+        Clinical trials by country visualization
+    </div>
     <div id="container">
-        <div id="countries_map"></div>
+        <div>
+            <div id="countries_map"></div>
+        
+            <div id="legend_table"> Legend (number of trials): 
+                <span id="legend1" class="legend_slots">100-1000</span>
+                <span id="legend2" class="legend_slots">100-1000</span>
+                <span id="legend3" class="legend_slots">100-1000</span>
+                <span id="legend4" class="legend_slots">100-1000</span>
+                <span id="legend5" class="legend_slots">100-1000</span>
+                <span id="legend6" class="legend_slots">100-1000</span>
+                <span id="legend7" class="legend_slots">100-1000</span>
+                <span id="legend8" class="legend_slots">100-1000</span>
+                <span id="legend9" class="legend_slots">100-1000</span>
+            </div>
+        
+        </div>
+        
         <div id=left_container>
-            <div id="country_details">3</div>
-            <div id="country_graph_container" s>
-                <div id="country_graph_title" style="width : 100%">I am graph title</div>
-                <div id="country_graph"></div>
+            <div id="country_details">
+                <div id="country_title" class="div_width">No country</div>
+                <div id="country_wiki" class="div_width">No wiki</div>
+                <div id="country_population" class="div_width">No population</div>
+                <div id="country_area" class="div_width">No area</div>
+            </div>
+            <div id="country_graph_container" >
+                <div id="country_graph_title" class="div_width">Number of trials by year</div>
+                <!-- <div style= "margin: auto; width:380px;  background-color: aqua"> -->
+                    <div id="country_graph"></div>
+                    
+                <!-- </div> -->
             </div>
         </div>
+    </div>
+    <div>
+        Click on country to see more info.
+    </div>
+    <div id="bottom">
+        Based on data from https://clinicaltrials.gov/ as of 28-Oct-2018.
+        Data was parsed from full XML set of clinical trials registered at the site and countries have been assigned based on &lt;location_countries&gt; from XML file.
     </div>
 </body>
 </html>

@@ -2,14 +2,11 @@
 require.config({
     paths: {
         d3: "../js/d3/d3.min",
-    //   plotly : "https://cdn.plot.ly/plotly-latest.min"
-        // plotly : "../js/plotly/plotly-latest.min",
         c3: "../js/c3.min"
     }
   });
 
   function makeCountryChart(data, elementClicked) {
-
     console.log(d3.select(elementClicked).datum());
     nct_ids = []
     years = []
@@ -27,7 +24,7 @@ require.config({
     i=0;
     real_nct_ids = ["nct_id"];
     real_years = ["ticks"]
-    while(curr_year<max_year) {
+    while(curr_year<=max_year) {
         if(curr_year == years[i]) {
             real_nct_ids.push(nct_ids[i])
             real_years.push(years[i])
@@ -43,8 +40,8 @@ require.config({
     var chart = c3.generate({
         bindto: '#country_graph',
         size: {
-            height: 140,
-            width: 280
+            height: 160,
+            width: 380
         },
         data: {
             x: "ticks",
@@ -102,9 +99,13 @@ function mapClicked(elementClicked) {
     d3.select("#left_container").transition().duration(1000)
         .style("transform", "scale(0.001, 1)")
         .on("end", function(d) {
-            country_name = d3.select(elementClicked).datum().full_country_name;
-            d3.select("#country_details").text(country_name);
-            country_json = d3.json("../json/"+country_name+".json").then(function(data) {
+            country_data = d3.select(elementClicked).datum();
+            // country_name = d3.select(elementClicked).datum().full_country_name;
+            d3.select("#country_title").text(country_data.full_country_name);
+            d3.select("#country_wiki").html("<a href="+country_data.wiki_link+" target=\"_blank\">Country wiki</a>");
+            d3.select("#country_population").text("Population:"+country_data.population);
+            d3.select("#country_area").text("Area:"+country_data.area);
+            country_json = d3.json("../json/"+country_data.full_country_name+".json").then(function(data) {
                 console.log(data);
                 makeCountryChart(data, elementClicked);
                 d3.select("#left_container")
@@ -113,6 +114,7 @@ function mapClicked(elementClicked) {
             })
             .catch(function(error) {
                 d3.select("#country_graph").text("Error downloading data");
+                
                 d3.select("#left_container")
                     .transition().duration(500)
                     .style("transform", "scale(1, 1)");
