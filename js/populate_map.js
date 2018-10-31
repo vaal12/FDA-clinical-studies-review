@@ -108,7 +108,13 @@ function mapClicked(elementClicked) {
                 console.log(data);
                 makeCountryChart(data, elementClicked);
                 d3.select("#left_container")
-                    .transition().duration(1000)
+                    .transition().duration(500)
+                    .style("transform", "scale(1, 1)");
+            })
+            .catch(function(error) {
+                d3.select("#country_graph").text("Error downloading data");
+                d3.select("#left_container")
+                    .transition().duration(500)
                     .style("transform", "scale(1, 1)");
             });//country_json = d3.json("../json/Albania.json").then(function(data) {
         })//.on("end", function(d) {
