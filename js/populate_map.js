@@ -3,7 +3,7 @@ require.config({
     paths: {
         d3: "../js/d3/d3.min",
     //   plotly : "https://cdn.plot.ly/plotly-latest.min"
-        plotly : "../js/plotly/plotly-latest.min",
+        // plotly : "../js/plotly/plotly-latest.min",
         c3: "../js/c3.min"
     }
   });
@@ -121,7 +121,7 @@ function mapClicked(elementClicked) {
 }//END function mapClicked(d3Obj, plotlyObj, elementClicked) {
 
 
-define(["c3", "plotly"], function(c3, Plotly){ return {
+define(["c3"], function(c3){ return {
         populateMap: function(svg_map_elem_id, data, quantile_scale) {
             window.c3 = c3;
             // console.log("Hello"+svg_map_elem_id);

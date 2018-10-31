@@ -9,7 +9,7 @@ def getNumberBucket(number, bucketsArray):
 
 def transformCountrySVG(countriesListDF, bucketsArray, colorArray):
     # print("Buckets array:{}".format(bucketsArray))
-    with open("world-map_20Sep2018.svg") as fp:
+    with open("svg/world-map_20Sep2018.svg") as fp:
         #XML is needed as html.parser does something unspeakable to the code
         soup = BeautifulSoup(fp, features="xml") #, features="html5" "html.parser", "lxml"
 
