@@ -68,7 +68,7 @@ require(["d3", "populate_map"], function(d3, populate_map) {
 
     
 
-  d3.json("../csv/countries_trials_31Oct2018.json").then(
+  d3.json("../csv/countries_trials_1Nov2018.json").then(
     function(data) {
       console.log(data);
       var nct_counts_arr = []
@@ -77,8 +77,8 @@ require(["d3", "populate_map"], function(d3, populate_map) {
         nct_counts_arr.push(data[cnt].nct_id_count)
       }
       nct_counts_arr.sort(function(a, b){return a - b});
-      // console.log("nct_counts_arr")
-      // console.log(nct_counts_arr);
+      console.log("nct_counts_arr")
+      console.log(nct_counts_arr);
 
       //Chromatic scales: https://github.com/d3/d3-scale-chromatic
       var quantile_scale = d3.scaleQuantile()

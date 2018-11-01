@@ -104,7 +104,7 @@ function mapClicked(elementClicked) {
             d3.select("#country_title").text(country_data.full_country_name);
             d3.select("#country_wiki").html("<a href="+country_data.wiki_link+" target=\"_blank\">Country wiki</a>");
             d3.select("#country_population").text("Population:"+country_data.population);
-            d3.select("#country_area").text("Area:"+country_data.area);
+            d3.select("#country_area").text("Area: "+country_data.area+" sq.km");
             country_json = d3.json("../json/"+country_data.full_country_name+".json").then(function(data) {
                 console.log(data);
                 makeCountryChart(data, elementClicked);
