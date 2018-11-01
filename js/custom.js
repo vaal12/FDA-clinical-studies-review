@@ -121,7 +121,11 @@ require(["d3", "populate_map"], function(d3, populate_map) {
           .attr("style", "background-color:"+curr_color+"; color:"+invertColor(curr_color))
           .text(legend_text);
         i++;
-      }
+      };//while(i<(good_quantiles.length-1)) {
+
+      d3.select("#legend_table").attr("style", "");
+
+
 
 
 
