@@ -4,28 +4,28 @@ require.config({
         d3: "../js/d3/d3.min",
         c3: "../js/c3.min"
     }
-  });
+});
 
-  function makeCountryChart(data, elementClicked) {
+function makeCountryChart(data, elementClicked) {
     console.log(d3.select(elementClicked).datum());
     nct_ids = []
     years = []
-    
-    for(year in data) {
+
+    for (year in data) {
         // console.log(year)
         years.push(year);
         nct_ids.push(data[year].nct_id);
     }
-    
+
     // console.log(""+d3.max(years)+"  "+d3.min(years));
     // console.log(years[0])
     max_year = d3.max(years)
-    curr_year=d3.min(years);
-    i=0;
+    curr_year = d3.min(years);
+    i = 0;
     real_nct_ids = ["nct_id"];
     real_years = ["ticks"]
-    while(curr_year<=max_year) {
-        if(curr_year == years[i]) {
+    while (curr_year <= max_year) {
+        if (curr_year == years[i]) {
             real_nct_ids.push(nct_ids[i])
             real_years.push(years[i])
             i++;
@@ -53,7 +53,7 @@ require.config({
             type: 'bar'
         },
         legend: {
-            text:"I am a abar",
+            text: "I am a abar",
             show: false,
         },
         axis: {
@@ -61,7 +61,7 @@ require.config({
                 show: false
             },
             x: {
-                label : {
+                label: {
                     text: "year",
                     position: 'outer-right'
                 },
@@ -81,10 +81,10 @@ require.config({
                 var graphOffsetX = document.querySelector("#country_graph g.c3-axis-y").getBoundingClientRect().right;
                 // var tooltipWidth = document.getElementById('tooltip').parentNode.clientWidth;
                 var tooltipWidth = 50;
-                var x = (parseInt(element.getAttribute('cx')) ) + graphOffsetX - chartOffsetX - Math.floor(tooltipWidth/2);
+                var x = (parseInt(element.getAttribute('cx'))) + graphOffsetX - chartOffsetX - Math.floor(tooltipWidth / 2);
                 var y = element.getAttribute('cy');
                 var y = y - height - 14;
-                return {top: y, left: x}
+                return { top: y, left: x }
             },
             // contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
             //   d = Math.floor(d[0].value)
@@ -92,77 +92,93 @@ require.config({
             // }
         }
     });//var chart = c3.generate({
-  }//END function makeCountryChart(data) {
+}//END function makeCountryChart(data) {
 
 
 function mapClicked(elementClicked) {
     d3.select("#left_container").transition().duration(1000)
         .style("transform", "scale(0.001, 1)")
-        .on("end", function(d) {
+        .on("end", function (d) {
             country_data = d3.select(elementClicked).datum();
             // country_name = d3.select(elementClicked).datum().full_country_name;
             d3.select("#country_title").text(country_data.full_country_name);
-            d3.select("#country_wiki").html("<a href="+country_data.wiki_link+" target=\"_blank\">Country wiki</a>");
-            d3.select("#country_population").text("Population:"+country_data.population);
-            d3.select("#country_area").text("Area: "+country_data.area+" sq.km");
-            country_json = d3.json("../json/"+country_data.full_country_name+".json").then(function(data) {
+            d3.select("#country_wiki").html("<a href=" + country_data.wiki_link + " target=\"_blank\">Country wiki</a>");
+            if(country_data.population != -1) {
+                d3.select("#country_population").text("Population:" + country_data.population);
+            }
+            else {
+                d3.select("#country_population").text("Population: no data");
+            }
+            if(country_data.area != -1) {
+                d3.select("#country_area").text("Area: " + country_data.area + " sq.km");
+            }
+            else d3.select("#country_area").text("Area: no data");
+            
+            if(country_data.flag != -1) {
+                d3.select("#country_flag").text("")
+                d3.select("#country_flag").append("img").attr("src", country_data.flag)
+            }
+            else d3.select("#country_flag").text("")
+
+            country_json = d3.json("../json/" + country_data.full_country_name + ".json").then(function (data) {
                 console.log(data);
                 makeCountryChart(data, elementClicked);
                 d3.select("#left_container")
                     .transition().duration(500)
                     .style("transform", "scale(1, 1)");
             })
-            .catch(function(error) {
-                d3.select("#country_graph").text("Error downloading data");
-                
-                d3.select("#left_container")
-                    .transition().duration(500)
-                    .style("transform", "scale(1, 1)");
-            });//country_json = d3.json("../json/Albania.json").then(function(data) {
+                .catch(function (error) {
+                    d3.select("#country_graph").text("Error downloading data");
+
+                    d3.select("#left_container")
+                        .transition().duration(500)
+                        .style("transform", "scale(1, 1)");
+                });//country_json = d3.json("../json/Albania.json").then(function(data) {
         })//.on("end", function(d) {
 }//END function mapClicked(d3Obj, plotlyObj, elementClicked) {
 
 
-define(["c3"], function(c3){ return {
-        populateMap: function(svg_map_elem_id, data, quantile_scale) {
+define(["c3"], function (c3) {
+    return {
+        populateMap: function (svg_map_elem_id, data, quantile_scale) {
             window.c3 = c3;
             // console.log("Hello"+svg_map_elem_id);
             svg_elem = d3.select("#countries_map");
             // console.log(svg_elem);
-            svg_elem.selectAll("g").each(function(d) {
-                this_tag_id = d3.select(this).attr("id") 
+            svg_elem.selectAll("g").each(function (d) {
+                this_tag_id = d3.select(this).attr("id")
                 // console.log(d3.select(this).attr("id"))
-                // console.log(data[this_tag_id])
-                if(typeof data[this_tag_id] === 'undefined') {
+                console.log(data[this_tag_id])
+                if (typeof data[this_tag_id] === 'undefined') {
                     // console.log("No data");
                 }//END  if(typeof data[this_tag_id] === 'undefined') {
                 else {// if(typeof data[this_tag_id] === 'undefined') {
-                    
+
                     d3.select(this).selectAll("path, circle").each(
-                        function() {
+                        function () {
                             d3.select(this).attr(
-                                "fill", 
+                                "fill",
                                 quantile_scale(data[this_tag_id].nct_id_count)
                             )
-                            .attr("stroke",
-                                quantile_scale(data[this_tag_id].nct_id_count)
-                            )
-                            .classed('circlexx', false);
+                                .attr("stroke",
+                                    quantile_scale(data[this_tag_id].nct_id_count)
+                                )
+                                .classed('circlexx', false);
                         }
                     );//d3.select(this).selectAll("path").each(
                     d3.select(this).select("title").text(
-                        data[this_tag_id].full_country_name+":  "+
+                        data[this_tag_id].full_country_name + ":  " +
                         data[this_tag_id].nct_id_count
                     )
 
                     d3.select(this)
                         .datum(data[this_tag_id])
-                        .on("click", function() {
+                        .on("click", function () {
                             mapClicked(this)
                         });
                 }//END else {// if(typeof data[this_tag_id] === 'undefined') {
             });//END svg_elem.selectAll("g").each(function(d) {
-            
+
             //Removing extra circles, which do not have data available for them on the map
             svg_elem.selectAll(".circlexx").remove();
 
@@ -174,4 +190,5 @@ define(["c3"], function(c3){ return {
             //         );
             // })//END svg_elem.selectAll("g").each(
         }//populateMap: function(svg_map_elem_id, data, quantile_scale) {
-} });//END define(["d3"], function(d3){ return {
+    }
+});//END define(["d3"], function(d3){ return {
