@@ -34,7 +34,12 @@ require(["d3", "populate_map"], function (d3, populate_map) {
         d3.select("#legend_table").attr("style", "");
 
         d3.select('#mapModeSelector').on('change', function() {
+          console.log("Data:")
+          console.log(data)
           console.log(selectValue = d3.select('#mapModeSelector').property('value'))
+          dataAndScale = populate_map.prepareDataAndScale(data);
+          populate_map.populateMap("svg2985", data, dataAndScale.scale)
+          populate_map.colorLegend(dataAndScale)
         });//d3.select('mapModeSelector').on('change', function() {
 
 

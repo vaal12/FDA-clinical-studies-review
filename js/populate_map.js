@@ -159,17 +159,17 @@ define(["c3"], function (c3) { return {
                         function () {
                             d3.select(this).attr(
                                 "fill",
-                                quantile_scale(data[this_tag_id].nct_id_count)
+                                quantile_scale(data[this_tag_id].number_for_map_color)
                             )
                                 .attr("stroke",
-                                    quantile_scale(data[this_tag_id].nct_id_count)
+                                    quantile_scale(data[this_tag_id].number_for_map_color)
                                 )
                                 .classed('circlexx', false);
                         }
                     );//d3.select(this).selectAll("path").each(
                     d3.select(this).select("title").text(
                         data[this_tag_id].full_country_name + ":  " +
-                        data[this_tag_id].nct_id_count
+                        data[this_tag_id].number_for_map_color
                     )
 
                     d3.select(this)
@@ -193,27 +193,40 @@ define(["c3"], function (c3) { return {
         },//populateMap: function(svg_map_elem_id, data, quantile_scale) {
         prepareDataAndScale : function(data) {
             //CREATE NEW DATA FIELD
+            //Populate it based on selector
+            selection_val = d3.select('#mapModeSelector').property('value');
             for (var cnt in data) {
-                data[cnt].number_for_map_color = data[cnt].nct_id_count;
-                // console.log(cnt)
-                // console.log(data[cnt])
+                if(selection_val == "rawNumber")
+                    data[cnt].number_for_map_color = data[cnt].nct_id_count;
+                if(selection_val == "byPopulation") {
+                    console.log(cnt)
+                    console.log(data[cnt])
+                    // console.log("Creating by population")
+                    per_capita = Math.floor((data[cnt].nct_id_count*100000000) / data[cnt].population)/100
+                    console.log("Per capita:"+per_capita)
+                    data[cnt].number_for_map_color = per_capita
+                }
+                // if(selection_val == "byArea")
+                //     data[cnt].number_for_map_color = data[cnt].nct_id_count;
+                
             }
 
-            var nct_counts_arr = []
+            var data_counts_arr = []
             for (var cnt in data) {
               // console.log(cnt)
-              nct_counts_arr.push(data[cnt].nct_id_count)
+              if(data[cnt].number_for_map_color >=0 )
+                data_counts_arr.push(data[cnt].number_for_map_color)
             }
-            nct_counts_arr.sort(function (a, b) { return a - b });
-            // console.log("nct_counts_arr")
-            // console.log(nct_counts_arr);
+            data_counts_arr.sort(function (a, b) { return a - b });
+            console.log("data_counts_arr")
+            console.log(data_counts_arr);
 
             //GENERATE SCALES
             //Chromatic scales: https://github.com/d3/d3-scale-chromatic
             var quantile_scale = d3.scaleQuantile()
             // var quantile_scale = d3.scaleThreshold()
             // var quantile_scale = d3.scaleQuantize()
-                .domain(nct_counts_arr)
+                .domain(data_counts_arr)
                 // .range( d3.schemeBlues[9]);
                 .range( d3.schemeYlGnBu[9]);
 
@@ -226,7 +239,9 @@ define(["c3"], function (c3) { return {
                 i++;
             }
     
-            good_quantiles.push(d3.max(nct_counts_arr));
+            good_quantiles.push(d3.max(data_counts_arr));
+
+            console.log("good quantiles:"+good_quantiles)
             // console.log("Good quantiles:"+good_quantiles);
 
             return {
