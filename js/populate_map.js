@@ -120,6 +120,8 @@ function mapClicked(elementClicked) {
             }
             else d3.select("#country_flag").text("")
 
+            d3.select("#country_trials").text("Number of trials:"+country_data.nct_id_count)
+
             country_json = d3.json("../json/" + country_data.full_country_name + ".json").then(function (data) {
                 console.log(data);
                 makeCountryChart(data, elementClicked);
@@ -154,7 +156,9 @@ define(["c3"], function (c3) { return {
                     // console.log("No data");
                 }//END  if(typeof data[this_tag_id] === 'undefined') {
                 else {// if(typeof data[this_tag_id] === 'undefined') {
-
+                    // if(data[this_tag_id].number_for_map_color < 0) {
+                    //     console.log(data[this_tag_id].full_country_name + " has a negative color:"+data[this_tag_id].number_for_map_color)
+                    // } 
                     d3.select(this).selectAll("path, circle").each(
                         function () {
                             d3.select(this).attr(
@@ -191,6 +195,7 @@ define(["c3"], function (c3) { return {
             //         );
             // })//END svg_elem.selectAll("g").each(
         },//populateMap: function(svg_map_elem_id, data, quantile_scale) {
+///////////////////////////////////////////
         prepareDataAndScale : function(data) {
             //CREATE NEW DATA FIELD
             //Populate it based on selector
@@ -199,17 +204,21 @@ define(["c3"], function (c3) { return {
                 if(selection_val == "rawNumber")
                     data[cnt].number_for_map_color = data[cnt].nct_id_count;
                 if(selection_val == "byPopulation") {
-                    console.log(cnt)
-                    console.log(data[cnt])
+                    console.log("byPopulation")
+                    // console.log(cnt)
+                    // console.log(data[cnt])
                     // console.log("Creating by population")
                     per_capita = Math.floor((data[cnt].nct_id_count*100000000) / data[cnt].population)/100
-                    console.log("Per capita:"+per_capita)
+                    // console.log("Per capita:"+per_capita)
                     data[cnt].number_for_map_color = per_capita
+                }//if(selection_val == "byPopulation") {
+                if(selection_val == "byArea") {
+                    console.log("byArea")
+                    byArea = Math.floor((data[cnt].nct_id_count*100000000) / data[cnt].area) / 10000
+                    data[cnt].number_for_map_color = byArea;
                 }
-                // if(selection_val == "byArea")
-                //     data[cnt].number_for_map_color = data[cnt].nct_id_count;
-                
-            }
+                    
+            }//for (var cnt in data) {
 
             var data_counts_arr = []
             for (var cnt in data) {
@@ -218,8 +227,8 @@ define(["c3"], function (c3) { return {
                 data_counts_arr.push(data[cnt].number_for_map_color)
             }
             data_counts_arr.sort(function (a, b) { return a - b });
-            console.log("data_counts_arr")
-            console.log(data_counts_arr);
+            // console.log("data_counts_arr")
+            // console.log(data_counts_arr);
 
             //GENERATE SCALES
             //Chromatic scales: https://github.com/d3/d3-scale-chromatic
@@ -241,7 +250,7 @@ define(["c3"], function (c3) { return {
     
             good_quantiles.push(d3.max(data_counts_arr));
 
-            console.log("good quantiles:"+good_quantiles)
+            // console.log("good quantiles:"+good_quantiles)
             // console.log("Good quantiles:"+good_quantiles);
 
             return {
@@ -250,7 +259,9 @@ define(["c3"], function (c3) { return {
                 data: data
             }//return {
         },//prepareDataAndScale : function(data) {
+//////////////////////////////////////////
         colorLegend: function(dataAndScale)  {
+            console.log("Color legend start")
             i = 0;
             while (i < (dataAndScale.quantiles.length - 1)) {
                 curr_color = dataAndScale.scale(dataAndScale.quantiles[i]);
@@ -264,6 +275,7 @@ define(["c3"], function (c3) { return {
                     .text(legend_text);
                 i++;
             };//while(i<(good_quantiles.length-1)) {
+            console.log("Color legend END")
         },//colorLegend: function(good_quantiles)  {
 }});//END define(["d3"], function(d3){ return {
 
@@ -297,8 +309,8 @@ function invertColor(hex, bw) {
     return "#" + padZero(r) + padZero(g) + padZero(b);
   }
   
-  function padZero(str, len) {
-    len = len || 2;
-    var zeros = new Array(len).join('0');
-    return (zeros + str).slice(-len);
-  }
+function padZero(str, len) {
+len = len || 2;
+var zeros = new Array(len).join('0');
+return (zeros + str).slice(-len);
+}

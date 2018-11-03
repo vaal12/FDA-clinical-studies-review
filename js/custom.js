@@ -42,6 +42,45 @@ require(["d3", "populate_map"], function (d3, populate_map) {
           populate_map.colorLegend(dataAndScale)
         });//d3.select('mapModeSelector').on('change', function() {
 
+        
+        
+
+        //RECT TO CHECK BOUNDS
+        // d3.select("#svg2985").append("rect")
+        //   .attr("fill", "red")
+        //   .attr("fill-opacity", "0.25")
+        //   .attr("x", -50)
+        //   .attr("y", 50)
+        //   .attr("pointer-events", "all")
+        //   .attr("width", 2800)
+        //   .attr("height", 1430)
+        //   .call(d3.zoom()
+        //       .scaleExtent([1, 8])
+        //       .on("zoom", zoom)
+        // );//d3.select("#svg2985").append("rect")
+
+
+        //ZOOM BEHAIVIOR
+        function zoomFunc() {
+          d3.select("#allIncludingForZoomG").attr(
+            "transform", d3.event.transform
+          )
+        }
+
+        svg = d3.select('#svg2985');
+        zoomable_layer = d3.select("#allIncludingForZoomG");
+        zoom = d3.zoom().scaleExtent([-Infinity, Infinity]).on('zoom', zoomFunc);
+
+        svg.call(zoom)
+
+        // g=d3.select("#allIncludingForZoomG").call(zoom)
+
+        // function zoom() {
+        //   // console.log(d3.event.transform)
+        //   g.attr("transform", d3.event.transform);
+        // }
+
+
 
       });//d3.json("../csv/countries_trials_28Oct.json").then(
     // function(data) {
