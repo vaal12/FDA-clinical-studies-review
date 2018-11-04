@@ -16,10 +16,12 @@
                     create symbolic link in Far (Alt+F6)? -->
     <!-- Flexbox: https://www.w3schools.com/css/css3_flexbox.asp -->
     <div id="title">
-        Clinical trials by country visualization
+        Clinical trials by country visualization<br>
+        Zoom with mouse wheel and pan with mouse (click and hold to pan)
+
     </div>
     Map data:
-    <select id="mapModeSelector">
+    <select id="mapModeSelector" style="margin:5px;">
         <option value="rawNumber">Raw trials number per country</option>
         <option value="byPopulation">Trials per 1 000 000 men</option>
         <option value="byArea">Trials per 10000 sq. km</option>
@@ -43,12 +45,36 @@
 
         <div id=left_container>
             <div id="country_details">
-                <div id="country_title" class="div_width">Click on country</div>
+                <div id="country_title" class="div_width">Click on country to see details</div>
                 <div id="country_flag"></div>
-                <div id="country_wiki">to see </div>
-                <div id="country_population" class="div_width">details</div>
-                <div id="country_area" class="div_width"></div>
-                <div id="country_trials" class="div_width"></div>
+                <div id="country_wiki"></div>
+                <table>
+                    <tr>
+                        <td>
+                            Population:
+                        </td>
+                        <td>
+                            <div id="country_population" class="div_width"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Area:
+                        </td>
+                        <td>
+                            <div id="country_area" class="div_width"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Number of trials:
+                        </td>
+                        <td>
+                            <div id="country_trials" class="div_width"></div>
+                        </td>
+                    </tr>
+                </table>
+                
             </div>
             <div id="country_graph_container">
                 <div id="country_graph_title" class="div_width">Number of trials by year graph</div>
@@ -60,7 +86,7 @@
         Click on country to see more info.
     </div>
     <div id="bottom">
-        Based on data from https://clinicaltrials.gov/ as of 28-Oct-2018.
+        Based on data from https://clinicaltrials.gov/ as of 1Nov2018.
         Data was parsed from full XML set of clinical trials registered at the site and countries have been assigned
         based on &lt;location_countries&gt; from XML file.
     </div>

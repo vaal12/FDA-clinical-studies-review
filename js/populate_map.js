@@ -104,15 +104,17 @@ function mapClicked(elementClicked) {
             d3.select("#country_title").text(country_data.full_country_name);
             d3.select("#country_wiki").html("<a href=" + country_data.wiki_link + " target=\"_blank\">Country wiki</a>");
             if(country_data.population != -1) {
-                d3.select("#country_population").text("Population:" + country_data.population);
+                d3.select("#country_population")
+                    .text(numberAsStrWithThousandsDelimited(country_data.population));
             }
             else {
-                d3.select("#country_population").text("Population: no data");
+                d3.select("#country_population").text("no data");
             }
             if(country_data.area != -1) {
-                d3.select("#country_area").text("Area: " + country_data.area + " sq.km");
+                d3.select("#country_area")
+                    .text(numberAsStrWithThousandsDelimited(country_data.area) + " sq.km");
             }
-            else d3.select("#country_area").text("Area: no data");
+            else d3.select("#country_area").text("no data");
             
             if(country_data.flag != -1) {
                 d3.select("#country_flag").text("")
@@ -120,7 +122,8 @@ function mapClicked(elementClicked) {
             }
             else d3.select("#country_flag").text("")
 
-            d3.select("#country_trials").text("Number of trials:"+country_data.nct_id_count)
+            d3.select("#country_trials")
+                .text(numberAsStrWithThousandsDelimited(country_data.nct_id_count));
 
             country_json = d3.json("../json/" + country_data.full_country_name + ".json").then(function (data) {
                 console.log(data);
@@ -261,7 +264,7 @@ define(["c3"], function (c3) { return {
         },//prepareDataAndScale : function(data) {
 //////////////////////////////////////////
         colorLegend: function(dataAndScale)  {
-            console.log("Color legend start")
+            // console.log("Color legend start")
             i = 0;
             while (i < (dataAndScale.quantiles.length - 1)) {
                 curr_color = dataAndScale.scale(dataAndScale.quantiles[i]);
@@ -275,7 +278,7 @@ define(["c3"], function (c3) { return {
                     .text(legend_text);
                 i++;
             };//while(i<(good_quantiles.length-1)) {
-            console.log("Color legend END")
+            // console.log("Color legend END")
         },//colorLegend: function(good_quantiles)  {
 }});//END define(["d3"], function(d3){ return {
 
@@ -314,3 +317,20 @@ len = len || 2;
 var zeros = new Array(len).join('0');
 return (zeros + str).slice(-len);
 }
+
+function numberAsStrWithThousandsDelimited(number) {
+    number_str = ""+number;
+    i=0
+    result_str = ""
+    while(i< number_str.length) {
+      // console.log("i="+i);
+      // console.log("i%3="+(i%3))
+      if(((number_str.length-i)%3)==0 && i!=0) {
+        result_str = result_str+ ",";
+      }
+      result_str = result_str + number_str[i]
+      i++;
+    }
+    // console.log(result_str)
+    return result_str
+  }

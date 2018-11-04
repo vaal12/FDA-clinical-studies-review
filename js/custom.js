@@ -79,10 +79,28 @@ require(["d3", "populate_map"], function (d3, populate_map) {
         //   // console.log(d3.event.transform)
         //   g.attr("transform", d3.event.transform);
         // }
-
+        numberAsStrWithThousandsDelimited(1000000);
 
 
       });//d3.json("../csv/countries_trials_28Oct.json").then(
     // function(data) {
   });//d3.svg("../svg/world-map_for_dashboard.svg", function(error, xml) {
 });//require(["d3", "populate_map"], function(d3, populate_map) {
+
+
+function numberAsStrWithThousandsDelimited(number) {
+  number_str = ""+number;
+  i=0
+  result_str = ""
+  while(i< number_str.length) {
+    // console.log("i="+i);
+    // console.log("i%3="+(i%3))
+    if(((number_str.length-i)%3)==0) {
+      result_str = result_str+ ",";
+    }
+    result_str = result_str + number_str[i]
+    i++;
+  }
+  console.log(result_str)
+  return result_str
+}
