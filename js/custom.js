@@ -79,7 +79,8 @@ require(["d3", "populate_map"], function (d3, populate_map) {
         //   // console.log(d3.event.transform)
         //   g.attr("transform", d3.event.transform);
         // }
-        numberAsStrWithThousandsDelimited(1000000);
+
+        
 
 
       });//d3.json("../csv/countries_trials_28Oct.json").then(

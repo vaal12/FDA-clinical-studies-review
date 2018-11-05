@@ -94,6 +94,28 @@ function makeCountryChart(data, elementClicked) {
     });//var chart = c3.generate({
 }//END function makeCountryChart(data) {
 
+function makeCountryPhaseChart() {
+    var chart = c3.generate({
+        bindto: '#country_phase_graph',
+        size: {
+            height: 180,
+            width: 180
+        },
+        data: {
+            // iris data from R
+            columns: [
+                ['data1', 30],
+                ['data2', 120],
+            ],
+            type : 'pie',
+            // onclick: function (d, i) { console.log("onclick", d, i); },
+            // onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+            // onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+        }
+    });
+    
+}//END function makeCountryPhaseChart() {
+
 
 function mapClicked(elementClicked) {
     d3.select("#left_container").transition().duration(1000)
@@ -128,6 +150,7 @@ function mapClicked(elementClicked) {
             country_json = d3.json("../json/" + country_data.full_country_name + ".json").then(function (data) {
                 console.log(data);
                 makeCountryChart(data, elementClicked);
+                makeCountryPhaseChart();
                 d3.select("#left_container")
                     .transition().duration(500)
                     .style("transform", "scale(1, 1)");
